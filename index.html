@@ -2,103 +2,552 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CERN Tours by Daniel Koestler</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Information and feedback page for guided CERN tours with Daniel Koestler."
+  >
+
+  <title>CERN Tours with Daniel</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f5f0;
-      color: #222;
-      text-align: center;
-    }
-
-    .page {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 50px 20px;
-    }
-
-    .hero-image {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 16px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.1rem;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
       line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: white;
+      border-bottom: 1px solid #d9e0e7;
+    }
+
+    .top-bar-inner {
+      width: min(1100px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .site-name,
+    .top-link {
+      text-decoration: none;
+      font-weight: bold;
+      color: #123b5d;
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: flex-end;
+      background:
+        linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.78),
+          rgba(0, 0, 0, 0.08)
+        ),
+        url("main-photo.jpg");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      width: min(1100px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 85px 0;
+      color: white;
+    }
+
+    .hero-content h1 {
+      max-width: 800px;
+      margin: 0 0 18px;
+      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      line-height: 1.05;
+    }
+
+    .hero-content p {
+      max-width: 720px;
+      margin: 0 0 28px;
+      font-size: 1.2rem;
     }
 
     .button {
       display: inline-block;
-      margin: 15px 5px;
-      padding: 16px 26px;
-      background: #222;
+      padding: 15px 24px;
+      border-radius: 9px;
+      background: #123b5d;
       color: white;
       text-decoration: none;
-      border-radius: 10px;
       font-weight: bold;
+      border: 2px solid #123b5d;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
     .button:hover {
-      opacity: 0.8;
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .button-light {
+      background: white;
+      color: #123b5d;
+      border-color: white;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 40px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: #52616d;
+      font-size: 1.08rem;
+    }
+
+    .about-section {
+      background: white;
+    }
+
+    .about-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 420px) 1fr;
+      align-items: center;
+      gap: 55px;
+      margin-bottom: 70px;
+    }
+
+    .about-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-row.reverse {
+      grid-template-columns: 1fr minmax(260px, 420px);
+    }
+
+    .about-row.reverse .about-picture {
+      order: 2;
+    }
+
+    .about-picture img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+    }
+
+    .about-text h2,
+    .about-text h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    .about-text h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .about-text h3 {
+      font-size: 1.8rem;
+    }
+
+    .about-text p {
+      color: #3f4d57;
+      font-size: 1.08rem;
+    }
+
+    .gallery-section {
+      background: #f4f6f8;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      overflow: hidden;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 9px 25px rgba(0, 0, 0, 0.09);
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 330px;
+      object-fit: cover;
+    }
+
+    .gallery figcaption {
+      padding: 18px 20px;
+    }
+
+    .gallery figcaption strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+      color: #123b5d;
+    }
+
+    .review-section {
+      background: #123b5d;
+      color: white;
+      text-align: center;
+    }
+
+    .review-box {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .review-box h2 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .review-box p {
+      margin: 0 auto 28px;
+      max-width: 650px;
+      font-size: 1.1rem;
+    }
+
+    .contact-section {
+      background: white;
+      text-align: center;
+    }
+
+    .contact-box {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 45px 28px;
+      background: #f4f6f8;
+      border-radius: 16px;
+      box-shadow: 0 9px 25px rgba(0, 0, 0, 0.07);
+    }
+
+    .contact-box h2 {
+      margin-top: 0;
+      font-size: 2rem;
     }
 
     footer {
-      margin-top: 50px;
-      font-size: 0.9rem;
-      color: #666;
+      padding: 30px 20px;
+      background: #17232c;
+      color: white;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 750px) {
+      .hero {
+        min-height: 540px;
+      }
+
+      .hero-content {
+        padding: 60px 0;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .about-row,
+      .about-row.reverse {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .about-row.reverse .about-picture {
+        order: initial;
+      }
+
+      .about-picture img {
+        height: 430px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery img {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .top-bar-inner {
+        padding: 12px 0;
+      }
+
+      .top-link {
+        font-size: 0.9rem;
+      }
+
+      .about-picture img {
+        height: 380px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
-    <img
-      class="hero-image"
-      src="tour-photo.jpg"
-      alt="Guests enjoying one of our guided tours"
-    >
 
-    <h1>Your Tour Name</h1>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <a class="site-name" href="#top">
+        CERN Tours with Daniel
+      </a>
 
-    <p>
-      Thank you for joining my guided tour! I hope you had a wonderful
-      experience. If you have the time to leave a short review, I would grately appreciate it! :)
-    </p>
+      <a class="top-link" href="#review">
+        Leave a review
+      </a>
+    </div>
+  </header>
 
-    <a
-      class="button"
-      href="YOUR-GOOGLE-REVIEW-LINK"
-      target="_blank"
-      rel="noopener"
-    >
-      ⭐ Leave a Review
-    </a>
+  <main>
 
-    <h2>About your guide</h2>
+    <section class="hero" id="top">
+      <div class="hero-content">
+        <h1>
+          Thank you for joining my CERN tour!
+        </h1>
 
-    <p>
-    Hi, I'm Daniel, a 22-year-old physics student and Technical Student at CERN. Alongside my work, I volunteer as a CERN guide because I love sharing my workplace with visitors from around the world.
-    I give tours of the Antimatter Factory (AD), the CERN Control Centre (CCC), the Data Centre, and the ATLAS Visitor Centre
-    </p>
+        <p>
+          I hope you had a wonderful experience exploring CERN and
+          learning more about its science, technology and people.
+          If you have the time to leave a short review, I would
+          greatly appreciate it. :)
+        </p>
 
-    <p>
-      Questions?
-      <a href="daniel.koestler@cern.ch">Email me if you have any questions :) </a>
-    </p>
+        <a class="button button-light" href="#about">
+          About your guide
+        </a>
+      </div>
+    </section>
 
-    <footer>
-      © 2026 Daniel Koestler
-    </footer>
+    <section class="about-section" id="about">
+      <div class="container">
+
+        <div class="about-row">
+          <div class="about-picture">
+            <img
+              src="guide1.jpg"
+              alt="Me on holiday :)"
+            >
+          </div>
+
+          <div class="about-text">
+            <h2>About your guide</h2>
+
+            <p>
+              Hi, I’m Daniel, a 22-year-old physics student and
+              Technical Student at CERN.
+            </p>
+
+            <p>
+              Alongside my work, I volunteer as a CERN guide because
+              I love sharing my workplace with visitors from around
+              the world.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-row reverse">
+          <div class="about-picture">
+            <img
+              src="guide2.jpg"
+              alt="Me hiking :)"
+            >
+          </div>
+
+          <div class="about-text">
+            <h3>My CERN tours</h3>
+
+            <p>
+              I give tours of the Antimatter Factory, also known as
+              AD, the CERN Control Centre (CCC), the Data Centre and the
+              ATLAS Visitor Centre.
+            </p>
+
+            <p>
+              My goal is to explain CERN’s work in an interesting,
+              approachable and enjoyable way, whether you already
+              know a lot about physics or are discovering it for
+              the first time.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="gallery-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <h2>Places you may visit</h2>
+
+          <p>
+            Depending on the tour, visitors may discover some of
+            CERN’s most important scientific and technical sites.
+          </p>
+        </div>
+
+        <div class="gallery">
+
+          <figure>
+            <img
+              src="visit4.jpg"
+              alt="The Antimatter Factory at CERN"
+            >
+
+            <figcaption>
+              <strong>Antimatter Factory</strong>
+              The area where CERN produces and studies antimatter.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img
+              src="visit3.jpg"
+              alt="The CERN Control Centre"
+            >
+
+            <figcaption>
+              <strong>CERN Control Centre</strong>
+              The central control room for several of CERN’s accelerators.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img
+              src="visit1.jpg"
+              alt="CERN´s North Area"
+            >
+
+            <figcaption>
+              <strong>CERN´s North Area</strong>
+              The place that hosts a lot of the fixed-target experiments at CERN.
+            </figcaption>
+          </figure>
+
+          <figure>
+            <img
+              src="visit2.jpg"
+              alt="The ATLAS Visitor Centre at CERN"
+            >
+
+            <figcaption>
+              <strong>ATLAS Visitor Centre</strong>
+              An introduction to the ATLAS experiment and the science
+              of particle collisions.
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="review-section" id="review">
+      <div class="container">
+        <div class="review-box">
+
+          <h2>How was your CERN tour?</h2>
+
+          <p>
+            Your feedback helps me improve my tours and understand
+            what visitors found most interesting or useful.
+          </p>
+
+          <a
+            class="button button-light"
+            href="YOUR-TALLY-LINK"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ★ Leave a review
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-box">
+
+          <h2>Questions?</h2>
+
+          <p>
+            Email me if you have any questions about your visit.
+          </p>
+
+          <a
+            class="button"
+            href="mailto:daniel.koestler@cern.ch"
+          >
+            Email Daniel
+          </a>
+
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <p>
+      © 2026 Daniel Koestler
+    </p>
+  </footer>
+
 </body>
 </html>
