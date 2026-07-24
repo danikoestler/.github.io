@@ -180,6 +180,25 @@
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
     }
 
+
+    .first-guide-picture {
+      height: 480px;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+    }
+
+    .first-guide-picture img {
+      width: 100%;
+      height: auto;
+      min-height: 100%;
+      transform: scale(1.8) translateY(-22%);
+      transform-origin: center center;
+      box-shadow: none;
+      border-radius: 0;
+    }    
+
+    
     .about-text h2,
     .about-text h3 {
       margin-top: 0;
@@ -376,13 +395,12 @@
     <section class="about-section" id="about">
       <div class="container">
 
-        <div class="about-row">
-          <div class="about-picture">
-            <img
-              src="guide1.jpeg"
-              alt="Me on holiday :)"
-            >
-          </div>
+    <div class="about-picture first-guide-picture">
+      <img
+        src="guide1.jpeg"
+        alt="Me on holiday :)"
+       >
+    </div>
 
           <div class="about-text">
             <h2>About your guide</h2>
